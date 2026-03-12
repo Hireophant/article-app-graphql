@@ -22,5 +22,10 @@ export const resolvers = {
             await newArticle.save();
             return newArticle;
         },
+        deleteArticle: async (_: any, args) => {
+            const { id } = args;
+            await Article.updateOne({ _id: id }, { deleted: true, deletedAt: new Date() });
+            return "Delete article successfully";
+        },
     },
 };

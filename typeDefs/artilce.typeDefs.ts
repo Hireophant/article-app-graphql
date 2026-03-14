@@ -1,5 +1,5 @@
 // GraphQL API
-export const typeDefs = `#graphql
+export const typeDefsArticle = `#graphql
     type Article {
         id: ID
         title: String
@@ -8,17 +8,10 @@ export const typeDefs = `#graphql
         category: Category
     }
 
-    type Category {
-        id: ID
-        title: String
-        avatar: String
-    }
 
     type Query {
         getListArticle: [Article],
         getArticle(id: ID): Article,
-        getListCategory: [Category],
-        getCategory(id: ID): Category
     }
 
     input ArticleInput {
@@ -28,10 +21,7 @@ export const typeDefs = `#graphql
         categoryId: String
     }
 
-    input CategoryInput {
-        title: String,
-        avatar: String
-    }
+
 
 
     type Mutation {
@@ -39,8 +29,5 @@ export const typeDefs = `#graphql
         deleteArticle(id: ID): String,
         updateArticle(id: ID, article: ArticleInput):  Article,
 
-        createCategory(category: CategoryInput): Category,
-        deleteCategory(id: ID): String,
-        updateCategory(id: ID, category: CategoryInput):  Category,
     }
 `;

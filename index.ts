@@ -4,7 +4,7 @@ import * as database from "./config/database";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@as-integrations/express5";
 import cors from "cors";
-import { typeDefs } from "./typeDefs";
+import { typeDefs } from "./typeDefs/index.typeDefs";
 import { resolvers } from "./resolvers";
 
 import Article from "./models/article.model";
@@ -29,7 +29,7 @@ const startServer = async () => {
 
     // GraphQL API
     const apolloServer = new ApolloServer({
-    typeDefs,
+    typeDefs: typeDefs,
     resolvers,
     });
 

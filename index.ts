@@ -6,6 +6,7 @@ import { expressMiddleware } from "@as-integrations/express5";
 import cors from "cors";
 import { typeDefs } from "./typeDefs/index.typeDefs";
 import { resolvers } from "./resolvers/index.resolver";
+import { requireAuth } from "./middleware/auth.middleware";
 
 
 
@@ -27,19 +28,29 @@ const startServer = async () => {
     // });
 
     // GraphQL API
+
+
+
     const apolloServer = new ApolloServer({
-    typeDefs: typeDefs,
-    resolvers: resolvers,
+        typeDefs: typeDefs,
+        resolvers: resolvers,
     });
 
 
     await apolloServer.start();
 
     app.use(
-    "/graphql",
-    cors(),
-    express.json(),
-    expressMiddleware(apolloServer)
+        "/graphql",
+        requireAuth,
+        cors(),
+        express.json(),
+        expressMiddleware(apolloServer, {
+            context: async ({ req }) => {
+                return {
+                    ...req
+                };
+            },
+        })
     );
 
     app.listen(port, () => {

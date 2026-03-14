@@ -4,8 +4,15 @@ import Category from "../models/category.model";
 
 export const resolversArticle = {
     Query: {
-        getListArticle: async () => {
-            const articles = await Article.find({ deleted: false });
+        getListArticle: async (_: any, args) => {
+            const { sortKey, sortValue } = args;
+            // Sort
+            const sort = {};
+            if(sortKey && sortValue){
+                sort[sortKey] = sortValue;
+            }
+            // End Sort
+            const articles = await Article.find({ deleted: false }).sort(sort);
             return articles;
         },
         getArticle: async (_: any, args) => {
